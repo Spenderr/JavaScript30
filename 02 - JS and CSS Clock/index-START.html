@@ -46,14 +46,17 @@
         0 0 0 4px rgba(0,0,0,0.1),
         inset 0 0 0 3px #EFEFEF,
         inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
+        0 0 10px rgba(0,0,0,0.2);    
     }
-
+ 
     .clock-face {
       position: relative;
       width: 100%;
       height: 100%;
       transform: translateY(-3px); /* account for the height of the clock hands */
+      transition-duration: 2s;
+      transform: rotate(90deg);  
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
 
     .hand {
@@ -62,12 +65,40 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;        
     }
 
   </style>
 
   <script>
-
+      const secondHand = document.querySelector('.second-hand');
+      const minHand = document.querySelector('.min-hand');
+      const hourHand = document.querySelector('.hour-hand');
+      
+      function sayDate()
+      {
+      const now = new Date();      
+      const seconds = now.getSeconds();
+      const mins = now.getMinutes();
+      const hour = now.getHours();      
+          
+      const secondsDegree = ((seconds/60) * 360);
+      const minsDegree = ((mins/60) * 360);
+      const hourDegree = ((hour/24)*360);      
+          
+      secondHand.style.transform = `rotate(${secondsDegree}deg)`;       
+      console.log(seconds);
+          
+      minHand.style.transform = `rotate(${minsDegree}deg)`;
+      console.log(mins);      
+      
+      hourHand.style.transform = `rotate(${hourDegree}deg)`;
+      console.log(hour);      
+            
+      }
+      
+      setInterval(sayDate,1000);
+      
 
   </script>
 </body>
